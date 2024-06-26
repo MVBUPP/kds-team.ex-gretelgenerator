@@ -1,0 +1,1 @@
+Generates synthesized data in tables using gretel AI

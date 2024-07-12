@@ -2,7 +2,7 @@
 Template Component main class.
 
 """
-import csv
+
 import logging
 import pandas as pd
 from datetime import datetime
@@ -51,7 +51,7 @@ class Component(ComponentBase):
 
         # dataset = "adult income in the USA (14000 records, 15 fields)" # @param ["adult income in the USA (14000 records, 15 fields)", "hospital length of stay (9999 records, 18 fields)", "customer churn (7032 records, 21 fields)"]
         # dataset = dataset_path_dict[dataset]
-        dataset=params[dataset]
+        dataset=params['dataset']
         df = pd.read_csv(dataset)
         df.head()
         trained = gretel.submit_train("tabular-actgan", data_source=dataset)

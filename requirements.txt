@@ -3,3 +3,7 @@ keboola.utils
 keboola.http-client
 mock
 freezegun
+gretel-client
+pandas
+ipython
+csv

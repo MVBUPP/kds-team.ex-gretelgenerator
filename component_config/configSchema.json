@@ -2,13 +2,17 @@
   "type": "object",
   "title": "extractor configuration",
   "required": [
-    "print_hello"
   ],
   "properties": {
-    "print_hello": {
-      "type": "boolean",
-      "title": "Print Hello",
+    "API_KEY": {
+      "type": "string",
+      "title": "API Key",
       "propertyOrder": 1
+    },
+    "dataset": {
+      "type": "string",
+      "title": "website for data",
+      "propertyOrder": 2
     },
     "debug": {
       "type": "boolean",

@@ -14,10 +14,10 @@ RUN apt-get update && apt-get install -y build-essential
 RUN pip install flake8
 
 RUN pip install -r /code/requirements.txt
-RUN pip install gretel-client
-RUN pip install pandas
-RUN pip install ipython
-RUN pip install csv
+RUN pip install -r gretel-client
+RUN pip install -r pandas
+RUN pip install -r ipython
+RUN pip install -r csv
 WORKDIR /code/
 
 

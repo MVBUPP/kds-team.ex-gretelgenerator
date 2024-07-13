@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y build-essential
 RUN pip install flake8
 
 RUN pip install -r /code/requirements.txt
+RUN pip install gretel-client
+RUN pip install pandas
+RUN pip install ipython
 WORKDIR /code/
 
 

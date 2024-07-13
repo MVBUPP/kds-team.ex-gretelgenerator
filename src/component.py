@@ -68,7 +68,7 @@ class Component(ComponentBase):
         # inspect the generated synthetic data
         generated.synthetic_data.head()
         
-        # # ####### EXAMPLE TO REMOVE
+        
         # # check for missing configuration parameters
         # self.validate_configuration_parameters(REQUIRED_PARAMETERS)
         # self.validate_image_parameters(REQUIRED_IMAGE_PARS)

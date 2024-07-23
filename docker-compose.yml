@@ -2,7 +2,7 @@ version: "2"
 services:
   # for development purposes
   dev:
-    build: . -t
+    build: .
     volumes:
         - ./:/code
         - ./data:/data

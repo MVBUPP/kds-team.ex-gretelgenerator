@@ -43,32 +43,60 @@ class Component(ComponentBase):
         # params = self.configuration.parameters
         # API_KEY=params['API_KEY']
         gretel = Gretel(api_key='prompt', validate=True)
-        dataset_path_dict = {
-            "adult income in the USA (14000 records, 15 fields)": "https://raw.githubusercontent.com/gretelai/gretel-blueprints/main/sample_data/us-adult-income.csv",
-            "hospital length of stay (9999 records, 18 fields)": "https://raw.githubusercontent.com/gretelai/gretel-blueprints/main/sample_data/sample-synthetic-healthcare.csv",
-            "customer churn (7032 records, 21 fields)": "https://raw.githubusercontent.com/gretelai/gretel-blueprints/main/sample_data/monthly-customer-payments.csv"
-        }
+        # dataset_path_dict = {
+        #     "adult income in the USA (14000 records, 15 fields)": "https://raw.githubusercontent.com/gretelai/gretel-blueprints/main/sample_data/us-adult-income.csv",
+        #     "hospital length of stay (9999 records, 18 fields)": "https://raw.githubusercontent.com/gretelai/gretel-blueprints/main/sample_data/sample-synthetic-healthcare.csv",
+        #     "customer churn (7032 records, 21 fields)": "https://raw.githubusercontent.com/gretelai/gretel-blueprints/main/sample_data/monthly-customer-payments.csv"
+        # }
 
-        dataset = "adult income in the USA (14000 records, 15 fields)" # @param ["adult income in the USA (14000 records, 15 fields)", "hospital length of stay (9999 records, 18 fields)", "customer churn (7032 records, 21 fields)"]
-        dataset = dataset_path_dict[dataset]
-        #dataset=params['dataset']
-        ###
-        df = pd.read_csv(dataset)
-        df.head()
-        trained = gretel.submit_train("tabular-actgan", data_source=dataset)
+        # dataset = "adult income in the USA (14000 records, 15 fields)" # @param ["adult income in the USA (14000 records, 15 fields)", "hospital length of stay (9999 records, 18 fields)", "customer churn (7032 records, 21 fields)"]
+        # dataset = dataset_path_dict[dataset]
+        # #dataset=params['dataset']
+        # ###
+        # df = pd.read_csv(dataset)
+        # df.head()
+        # trained = gretel.submit_train("tabular-actgan", data_source=dataset)
 
-        # view the quality scores
-        print(trained.report)   
-        # display the full report within this notebook
-        trained.report.display_in_notebook()
-        # inspect the synthetic data used to create the report
-        df_synth_report = trained.fetch_report_synthetic_data()
-        df_synth_report.head()
-        generated = gretel.submit_generate(trained.model_id, num_records=1000)
-        # inspect the generated synthetic data
-        generated.synthetic_data.head()
+        # # view the quality scores
+        # print(trained.report)   
+        # # display the full report within this notebook
+        # trained.report.display_in_browser()
+        # # inspect the synthetic data used to create the report
+        # df_synth_report = trained.fetch_report_synthetic_data()
+        # df_synth_report.head()
+        # generated = gretel.submit_generate(trained.model_id, num_records=1000)
+        # # inspect the generated synthetic data
+        # generated.synthetic_data.head()
         
-        
+        # list available backend models for Navigator Tabular
+        print(gretel.factories.get_navigator_model_list("tabular"))
+
+        # the `backend_model` argument is optional and defaults "gretelai/auto"
+        tabular = gretel.factories.initialize_navigator_api(
+            "tabular", backend_model="gretelai/auto"
+        )
+
+        prompt = """\
+        Generate customer bank transaction data. Include the following columns:
+        - customer_name
+        - customer_id
+        - transaction_date
+        - transaction_amount
+        - transaction_type
+        - transaction_category
+        - account_balance
+        """
+
+        # generate tabular data from a natural language prompt
+        df = tabular.generate(prompt, num_records=25)
+        print(df)
+        # add column to the generated table using the `edit` method
+        edit_prompt = """\
+        Add the following column to the provided table:
+
+        - customer_address
+        """
+        df_edited = tabular.edit(edit_prompt, seed_data=df)
         # # check for missing configuration parameters
         # self.validate_configuration_parameters(REQUIRED_PARAMETERS)
         # self.validate_image_parameters(REQUIRED_IMAGE_PARS)

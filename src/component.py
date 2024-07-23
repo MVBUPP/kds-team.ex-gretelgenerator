@@ -42,7 +42,7 @@ class Component(ComponentBase):
         """
         # params = self.configuration.parameters
         # API_KEY=params['API_KEY']
-        gretel = Gretel(api_key='prompt', validate=True)
+        # gretel = Gretel(api_key='prompt', validate=True)
         # dataset_path_dict = {
         #     "adult income in the USA (14000 records, 15 fields)": "https://raw.githubusercontent.com/gretelai/gretel-blueprints/main/sample_data/us-adult-income.csv",
         #     "hospital length of stay (9999 records, 18 fields)": "https://raw.githubusercontent.com/gretelai/gretel-blueprints/main/sample_data/sample-synthetic-healthcare.csv",
@@ -68,35 +68,37 @@ class Component(ComponentBase):
         # # inspect the generated synthetic data
         # generated.synthetic_data.head()
         
-        # list available backend models for Navigator Tabular
-        print(gretel.factories.get_navigator_model_list("tabular"))
+        # # list available backend models for Navigator Tabular
+        # print(gretel.factories.get_navigator_model_list("tabular"))
 
-        # the `backend_model` argument is optional and defaults "gretelai/auto"
-        tabular = gretel.factories.initialize_navigator_api(
-            "tabular", backend_model="gretelai/auto"
-        )
+        # # the `backend_model` argument is optional and defaults "gretelai/auto"
+        # tabular = gretel.factories.initialize_navigator_api(
+        #     "tabular", backend_model="gretelai/auto"
+        # )
 
-        prompt = """\
-        Generate customer bank transaction data. Include the following columns:
-        - customer_name
-        - customer_id
-        - transaction_date
-        - transaction_amount
-        - transaction_type
-        - transaction_category
-        - account_balance
-        """
+        # prompt = """\
+        # Generate customer bank transaction data. Include the following columns:
+        # - customer_name
+        # - customer_id
+        # - transaction_date
+        # - transaction_amount
+        # - transaction_type
+        # - transaction_category
+        # - account_balance
+        # """
 
-        # generate tabular data from a natural language prompt
-        df = tabular.generate(prompt, num_records=25)
-        print(df)
-        # add column to the generated table using the `edit` method
-        edit_prompt = """\
-        Add the following column to the provided table:
+        # # generate tabular data from a natural language prompt
+        # df = tabular.generate(prompt, num_records=25)
+        # print(df)
+        # # add column to the generated table using the `edit` method
+        # edit_prompt = """\
+        # Add the following column to the provided table:
 
-        - customer_address
-        """
-        df_edited = tabular.edit(edit_prompt, seed_data=df)
+        # - customer_address
+        # """
+        # df_edited = tabular.edit(edit_prompt, seed_data=df)
+
+        
         # # check for missing configuration parameters
         # self.validate_configuration_parameters(REQUIRED_PARAMETERS)
         # self.validate_image_parameters(REQUIRED_IMAGE_PARS)
